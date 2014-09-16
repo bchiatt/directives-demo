@@ -2,14 +2,10 @@
   'use strict';
 
   angular.module('directives-demo')
-  .controller('HomeCtrl', ['$scope', '$interval', 'Home', function($scope, $interval, Home){
-    Home.getMessage().then(function(response){
-      $scope.mean = response.data.mean;
-
-      $interval(function(){
-        $scope.mean = _.shuffle($scope.mean);
-      }, 500);
-    });
+  .controller('HomeCtrl', ['$scope', 'Home', function($scope, Home){
+    $scope.people  = [{name:'Bob', age:25}, {name:'Sally', age:500}, {name:'Baxter', age:3}];
+    $scope.symbols = ['GOOG', 'MSFT', 'AMZN'];
+    $scope.zips = ['37203', '45434', '46911'];
   }]);
 })();
 
