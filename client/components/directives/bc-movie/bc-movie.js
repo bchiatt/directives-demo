@@ -15,7 +15,7 @@
 
     o.restrict    = 'A';
     o.templateUrl = '/components/directives/bc-movie/bc-movie.html';
-    o.scope       = {title: '@'};
+    o.scope       = {title: '@', remove: '&'};
     o.link        = function(scope, element, attrs){
       element.on('$destroy', function(){
         $interval.cancel(scope.id);
@@ -25,6 +25,7 @@
     o.controller  = ['$scope', 'MovieApi', function($scope, MovieApi){
       function getMovieInfo(){
         MovieApi.movieInfo($scope.title).then(function(response){
+          $scope.title       = response.data.movies[0].title;
           $scope.releaseDate = response.data.movies[0].release_dates.theater;
           $scope.rating      = response.data.movies[0].mpaa_rating;
           $scope.photo       = response.data.movies[0].posters.detailed.replace(/_tmb/, '_pos');

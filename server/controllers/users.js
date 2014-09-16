@@ -35,3 +35,18 @@ exports.logout = function(req, res){
   });
 };
 
+exports.show = function(req, res){
+  res.send({client:req.user});
+};
+
+exports.addMov = function(req, res){
+  req.user.addMov(req.body, function(err, client){
+    res.send({client:client});
+  });
+};
+
+exports.delMov = function(req, res){
+  req.user.delMov(req.params.index, function(err, client){
+    res.send({client:client});
+  });
+};

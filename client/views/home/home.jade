@@ -1,9 +1,24 @@
-div(ng-repeat='movie in movies', bc-movie, title='{{movie}}')
+.form-group
+  label Movie Title:
+  input.form-control(type='text', ng-model='title')
+button.btn.btn-default(ng-click='addMovie()') Add Movie
+
 br
+
+div(ng-repeat='title in client.titles', bc-movie, title='{{title}}', remove='delMovie($index)')
+
+br
+
 div(ng-repeat='zip in zips', bc-weather, zip='{{zip}}')
+
 br
+
 div(ng-repeat='symbol in symbols', bc-stock, symbol='{{symbol}}')
+
 br
+
 div(ng-repeat='person in people', bc-greeting, name='{{person.name}}', age='{{person.age}}')
+
 br
+
 div(ng-repeat='freq in frequencies', bc-clock, frequency='{{freq}}')

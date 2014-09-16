@@ -7,7 +7,23 @@
     $scope.people      = [{name:'Bob', age:25}, {name:'Sally', age:500}, {name:'Baxter', age:3}];
     $scope.symbols     = ['GOOG', 'MSFT', 'AMZN'];
     $scope.zips        = ['37203', '45434', '46911'];
-    $scope.movies      = ['The Hobbit', 'Dumb And Dumberer', 'Shrek 2', 'Texas Chainsaw Massacre'];
+
+    Home.all().then(function(response){
+      $scope.client = response.data.client;
+    });
+
+    $scope.delMovie = function(index){
+      Home.delMov(index).then(function(response){
+        $scope.client = response.data.client;
+      });
+    };
+
+    $scope.addMovie = function(){
+      Home.addMov($scope.title).then(function(response){
+        $scope.client = response.data.client;
+        $scope.title = null;
+      });
+    };
   }]);
 })();
 
