@@ -1,0 +1,6 @@
+div {{title}}
+  img(src='{{photo}}')
+  h3 Cast:
+  h4(ng-repeat='character in cast') {{character.characters[0]}} played by {{character.name}}
+  h3 Rating: {{rating}}
+  h3 Released: {{releaseDate}}
