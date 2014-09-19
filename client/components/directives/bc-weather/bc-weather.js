@@ -4,8 +4,9 @@
 
   angular.module('bcWeatherModule', [])
   .factory('WeatherApi', ['$http', function($http){
-    function conditions(zip){
-      return $http.jsonp('http://api.wunderground.com/api/7ad931f0c68045c8/conditions/q/' + zip + '.json?callback=JSON_CALLBACK');
+    function conditions(query){
+
+      return $http.jsonp('http://api.wunderground.com/api/7ad931f0c68045c8/conditions/q/' + query + '.json?callback=JSON_CALLBACK');
     }
 
     return {conditions:conditions};
@@ -23,16 +24,24 @@
     };
 
     o.controller  = ['$scope', 'WeatherApi', function($scope, WeatherApi){
-      function getConditions(){
-        WeatherApi.conditions($scope.zip).then(function(response){
-          $scope.temp = response.data.current_observation.feelslike_f;
-          $scope.icon = response.data.current_observation.icon_url;
+
+      $scope.$on('position', function(event, pos){
+        if($scope.zip){return;}
+
+        var query = pos.coords.latitude + ',' + pos.coords.longitude;
+        getConditions(query);
+      });
+
+      function getConditions(query){
+        WeatherApi.conditions(query).then(function(response){
+          $scope.place = response.data.current_observation.observation_location.city;
+          $scope.temp  = response.data.current_observation.feelslike_f;
+          $scope.icon  = response.data.current_observation.icon_url;
         });
       }
 
-      $scope.id = $interval(getConditions, 30000);
+      if($scope.zip){getConditions($scope.zip);}
 
-      getConditions();
     }];
 
     return o;
